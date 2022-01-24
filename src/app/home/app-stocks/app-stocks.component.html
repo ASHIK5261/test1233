@@ -1,0 +1,43 @@
+<div style="min-width: 500px;">
+<p>Type any Stock:</p>
+<kendo-combobox
+[data]="stockList"
+textField='name'
+valueField="ticker"
+placeholder="e.g. Apple"
+(valueChange)="onValueChange($event)"
+>
+</kendo-combobox>
+<div class="container mt-5 mb-3" *ngIf="selectedStock && stockData">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                       
+                        <div class="ms-2 c-details">
+                            <h6 class="mb-0">{{selectedStock.name}}</h6> <span>Last updated : {{selectedStock.last_updated_utc | date}}</span>
+                        </div>
+                    </div>
+                    <div class="badge "> <span>{{selectedStock.ticker}}</span> </div>
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading"><span style="font-weight: bold;">{{stockData.close}}</span> <span class="text2"> {{selectedStock.currency_name | uppercase}}</span>
+                        <br><span style="font-weight: lighter;" [style.color]="stockData.close - stockData.open>0 ? 'green':'red'">{{stockData.close - stockData.open | number: '1.2-2' }} ({{stockData.close / stockData.open | number: '1.2-2' }}%)<span [ngClass]="stockData.close - stockData.open>0 ? 'k-icon k-i-arrow-up':'k-icon k-i-arrow-down'" style="font-size: 25px;"></span>today</span></h3>
+                    <div class="mt-5">
+                       
+                        <div class="mt-3">
+                             <span class="text1">Open: <span class="text2">{{stockData.open | number: '1.2-2'}}</span>  |  </span> 
+                           
+                             <span class="text1">High: <span class="text2">{{stockData.high | number: '1.2-2'}}</span>  |  </span> 
+                             <span class="text1">Low: <span class="text2">{{stockData.low | number: '1.2-2'}}</span>  </span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+</div>

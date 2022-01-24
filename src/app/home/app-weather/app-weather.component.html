@@ -1,0 +1,89 @@
+<div style="min-width: 500px;">
+  
+ <p style="text-align: left;">Type any Location:</p>
+
+<kendo-combobox
+[data]="locations"
+textField='EnglishName'
+valueField="Key"
+placeholder="e.g. Denmark"
+(valueChange)="onValueChange($event)"
+>
+</kendo-combobox>
+<div class="container" id="wrapper" *ngIf="selectedLocation && currentData && todayForeCast">
+    <div class="container-fluid" id="current-weather">
+      <div class="row">
+            <!-- Left panel -->
+        <div class="col-md-7 col-sm-7" style="margin: 10px auto;padding:0;">
+            <div class="row">
+              <i >
+              <img style="height: 100px;;" [src]="currentData.WeatherIcon | iconUrl"></i>
+              <div>
+                <span id="mainTemperature">{{(tempUnit=='C')?currentData.Temperature.Metric.Value:currentData.Temperature.Imperial.Value}}</span>
+                <p id="tempDescription">{{currentData.WeatherText}}</p>
+              </div>
+              <p style="font-size: 1.5rem;"><a href="#" [class.active]="this.tempUnit=='C'" id="celcius" (click)="tempUnit='C'">°C</a> | <a href="#" [class.active]="this.tempUnit=='F'" id="farenheit" (click)="tempUnit='F'"> °F</a></p>
+            </div>
+          </div>
+        <!-- Right panel -->
+        <div class="col-md-5 col-sm-5">
+          <h5><span id="cityName">{{selectedLocation.EnglishName}}</span>,{{selectedLocation.Country.ID}} <span id="cityCode"></span></h5>
+          <h6 id="localDate">{{todayDate | day}}, {{todayDate | date}} </h6>
+        
+        </div>
+        
+        <!-- Center panel -->
+      
+        
+    
+        <div class="col-xs-12 col-sm-12 col-md-12 row" style="text-align: right;">
+          <div class="col-md-3 col-sm-3 col-xs-3 side-weather-info">
+            <h6>Humidity: <span id="humidity"></span>{{currentData.RelativeHumidity}}%</h6>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-3 side-weather-info">
+            <h6>Wind: <span id="wind"></span>{{currentData.Wind.Speed.Metric.Value}} km/h</h6>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-3 side-weather-info">
+            <h6>High: <span id="mainTempHot">{{todayForeCast.Temperature.Maximum.Value }}</span>°F</h6>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-3 side-weather-info">
+            <h6>Low: <span id="mainTempLow"> {{todayForeCast.Temperature.Minimum.Value}}</span>°F</h6>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+    
+    
+    <!-- 4 days forecast -->
+    <div class="container-fluid">
+      <div class="row" style="padding: 2px;">
+        
+        
+        
+        <div class="col-md-3 col-sm-6 day-weather-box" *ngFor="let item of weatherData">
+          <div class="col-sm-12 day-weather-inner-box">
+            <div class="col-sm-8 forecast-main">
+              <p id="forecast-day-1-name">{{item.Date |day}}</p>
+              <div class="row">
+               
+                <i class="wi " ><img [src]="item.Day.Icon |  iconUrl"></i>
+              </div>
+            </div>
+            <div class="col-sm-4 forecast-min-low">
+              <p><span class="high-temperature" >{{item.Temperature.Maximum.Value}}</span>°F</p>
+              <p><span class="low-temperature" >{{item.Temperature.Minimum.Value}}</span>°F</p>
+            </div>
+          </div>
+        </div>
+        
+       
+        
+      </div>
+    </div>
+  </div>
+    
+
+</div>
